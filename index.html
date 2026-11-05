@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daniel Hantoro</title>
+  <meta name="description" content="Daniel Hantoro: Columbia Business School MBA candidate, former Fidelity software engineer, business development analyst, and restaurant owner-operator.">
+  <meta name="theme-color" content="#06122A">
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      --columbia: #B9D9EB;
+      --columbia-bright: #CFE6F5;
+      --sky: #75AADB;
+      --bg: #06122A;
+      --bg-2: #0A1C3D;
+      --panel: rgba(255,255,255,0.04);
+      --panel-hover: rgba(185,217,235,0.08);
+      --border: rgba(185,217,235,0.14);
+      --border-strong: rgba(185,217,235,0.32);
+      --text: #E8F0F7;
+      --muted: #9DB4CA;
+      --radius: 16px;
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* Ambient background: soft Columbia-blue glows + faint grid */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background:
+        radial-gradient(900px 600px at 85% -10%, rgba(117,170,219,0.28), transparent 60%),
+        radial-gradient(700px 500px at -10% 30%, rgba(185,217,235,0.12), transparent 60%),
+        radial-gradient(800px 600px at 50% 120%, rgba(117,170,219,0.14), transparent 60%);
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(185,217,235,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(185,217,235,0.045) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+    }
+    a { color: var(--columbia); }
+    a:focus-visible { outline: 2px solid var(--columbia); outline-offset: 3px; border-radius: 6px; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--columbia); color: var(--bg); padding: 8px 14px; border-radius: 8px; }
+    .skip:focus { left: 8px; }
+
+    /* Floating nav */
+    .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 0 16px; }
+    .nav-inner {
+      display: flex; align-items: center; gap: 6px; padding: 6px;
+      background: rgba(6,18,42,0.65); border: 1px solid var(--border);
+      border-radius: 999px; backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      max-width: 100%; overflow-x: auto;
+    }
+    .nav .brand {
+      display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0;
+      border-radius: 50%; background: var(--columbia); color: var(--bg);
+      font-weight: 800; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.02em;
+    }
+    .nav a.link {
+      padding: 7px 14px; border-radius: 999px; color: var(--muted);
+      text-decoration: none; font-size: 0.9rem; font-weight: 500; white-space: nowrap;
+      transition: color .2s, background .2s;
+    }
+    .nav a.link:hover { color: var(--text); }
+    .nav a.link.active { color: var(--bg); background: var(--columbia); }
+
+    /* Hero */
+    .hero { padding: 150px 0 60px; }
+    .hero-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 56px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--columbia); padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px;
+      background: var(--panel);
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: #7EE0A8; box-shadow: 0 0 0 4px rgba(126,224,168,0.18); }
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.02; margin: 20px 0 18px; letter-spacing: -0.035em; font-weight: 800;
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--columbia) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 600px; }
+    .hero .tagline strong { color: var(--text); font-weight: 600; }
+    .contact { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px;
+      text-decoration: none; font-size: 0.92rem; font-weight: 600;
+      border: 1px solid var(--border); background: var(--panel); color: var(--text);
+      transition: transform .2s, border-color .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: var(--border-strong); background: var(--panel-hover); }
+    .btn.primary { background: var(--columbia); color: var(--bg); border-color: var(--columbia); }
+    .btn.primary:hover { background: var(--columbia-bright); }
+    .btn svg { width: 17px; height: 17px; fill: currentColor; }
+
+    .avatar-wrap { position: relative; width: 260px; height: 260px; }
+    .avatar-wrap::before {
+      content: ""; position: absolute; inset: -6px; border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--columbia), var(--sky), transparent 40%, var(--columbia) 70%, var(--sky), var(--columbia));
+      animation: spin 12s linear infinite;
+    }
+    .avatar-wrap::after {
+      content: ""; position: absolute; inset: -40px; border-radius: 50%; z-index: -1;
+      background: radial-gradient(circle, rgba(117,170,219,0.35), transparent 65%);
+    }
+    .avatar {
+      position: relative; width: 100%; height: 100%; border-radius: 50%; display: block;
+      border: 6px solid var(--bg); object-fit: cover; background: var(--bg-2);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 56px; }
+    .stat {
+      padding: 18px 20px; border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(185,217,235,0.07), rgba(185,217,235,0.02));
+      border: 1px solid var(--border);
+    }
+    .stat .num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; color: var(--columbia); line-height: 1.1; }
+    .stat .lbl { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+    /* Tiles */
+    .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+    .tile {
+      position: relative; display: block; padding: 22px; border-radius: var(--radius);
+      background: var(--panel); border: 1px solid var(--border);
+      text-decoration: none; color: var(--text); overflow: hidden;
+      transition: transform .25s, border-color .25s, background .25s;
+    }
+    .tile::after {
+      content: "→"; position: absolute; right: 20px; top: 20px; color: var(--columbia);
+      opacity: 0.5; transition: transform .25s, opacity .25s;
+    }
+    .tile:hover { transform: translateY(-3px); border-color: var(--border-strong); background: var(--panel-hover); }
+    .tile:hover::after { transform: translateX(4px); opacity: 1; }
+    .tile .kicker { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.78rem; color: var(--sky); }
+    .tile h2 { margin: 6px 0 4px; font-size: 1.15rem; letter-spacing: -0.01em; }
+    .tile p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+    /* Sections */
+    section.block { padding: 96px 0 0; }
+    .section-head { margin-bottom: 32px; }
+    .section-head .idx { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--sky); letter-spacing: 0.06em; }
+    .section-head h2 { margin: 6px 0 0; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.025em; font-weight: 800; }
+
+    .card {
+      position: relative; padding: 26px 28px; border-radius: var(--radius);
+      background: var(--panel); border: 1px solid var(--border);
+      transition: border-color .25s, background .25s;
+    }
+    .card:hover { border-color: var(--border-strong); background: var(--panel-hover); }
+    .card + .card { margin-top: 16px; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    .card h3 { margin: 0; font-size: 1.15rem; letter-spacing: 0.01em; font-weight: 700; }
+    .org-desc { margin: 2px 0 0; color: var(--muted); font-size: 0.92rem; font-style: italic; }
+    .meta { text-align: right; font-size: 0.88rem; color: var(--muted); }
+    .pill {
+      display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 600; color: var(--columbia);
+      background: rgba(185,217,235,0.1); border: 1px solid var(--border);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .role { margin: 14px 0 6px; font-weight: 700; color: var(--columbia); }
+    .subhead { margin: 18px 0 6px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sky); }
+    .card ul { margin: 6px 0 0; padding-left: 0; list-style: none; }
+    .card li { position: relative; padding-left: 20px; margin-bottom: 8px; color: #CFDCE8; }
+    .card li::before { content: ""; position: absolute; left: 2px; top: 0.68em; width: 6px; height: 6px; border-radius: 50%; background: var(--sky); }
+    .card li b { color: var(--text); font-weight: 700; }
+    .detail { margin: 8px 0 0; color: #CFDCE8; }
+    .label { color: var(--muted); font-style: italic; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 36px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 9px; top: 12px; bottom: 12px; width: 2px;
+      background: linear-gradient(180deg, var(--columbia), rgba(185,217,235,0.05));
+    }
+    .timeline .card::before {
+      content: ""; position: absolute; left: -33px; top: 30px; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg); border: 3px solid var(--columbia); box-shadow: 0 0 0 5px rgba(185,217,235,0.12);
+    }
+    .timeline .card.current::before { background: var(--columbia); }
+
+    /* Additional info */
+    .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .info-grid .card + .card { margin-top: 0; }
+    .info-grid h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sky); margin-bottom: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .card .tags li { padding: 5px 12px; margin: 0; border-radius: 8px; font-size: 0.86rem; color: var(--text); background: rgba(185,217,235,0.08); border: 1px solid var(--border); }
+    .card .tags li::before { display: none; }
+    dl.kv { margin: 0; }
+    dl.kv dt { font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    dl.kv dd { margin: 0 0 14px; }
+    dl.kv dd:last-child { margin-bottom: 0; }
+
+    footer { margin-top: 110px; padding: 32px 0 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    footer a { color: var(--columbia); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Scroll reveal (only when JS runs and motion is OK) */
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+    @media (max-width: 860px) {
+      .hero { padding-top: 120px; }
+      .hero-inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+      .nav .full { display: none; }
+      .avatar-wrap { width: 160px; height: 160px; order: -1; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .tiles, .info-grid { grid-template-columns: 1fr; }
+      .meta { text-align: left; }
+      .timeline { padding-left: 28px; }
+      .timeline .card::before { left: -25px; }
+      .timeline::before { left: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Back to top">DH</a>
+      <a class="link" href="#education">Education</a>
+      <a class="link" href="#experience">Experience</a>
+      <a class="link" href="#additional"><span class="full">Additional </span>Info</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow"><span class="dot"></span>Columbia MBA '27 · Available June 2027</span>
+          <h1>Daniel Hantoro</h1>
+          <p class="tagline">MBA candidate at <strong>Columbia Business School</strong>. Software engineer turned business builder, with experience in platform engineering, growth strategy, and running a restaurant P&amp;L.</p>
+          <div class="contact" id="contact">
+            <a class="btn primary" href="mailto:dhantoro27@gsb.columbia.edu">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+              dhantoro27@gsb.columbia.edu
+            </a>
+            <a class="btn" href="mailto:hantorobimo@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+              hantorobimo@gmail.com
+            </a>
+            <a class="btn" href="https://www.linkedin.com/in/daniel-hantoro/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+              LinkedIn
+            </a>
+            <a class="btn" href="https://github.com/danielrbimo" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+        <div class="avatar-wrap">
+          <img class="avatar" src="assets/profile.jpg" alt="Portrait of Daniel Hantoro" width="260" height="260">
+        </div>
+      </div>
+
+      <div class="stats" aria-label="Highlights">
+        <div class="stat"><div class="num">50%</div><div class="lbl">API latency cut at Fidelity</div></div>
+        <div class="stat"><div class="num">60%</div><div class="lbl">Fewer deployment defects as Scrum Master</div></div>
+        <div class="stat"><div class="num">+24%</div><div class="lbl">Monthly net sales at Roku Ramen</div></div>
+        <div class="stat"><div class="num">Rp1B</div><div class="lbl">Build funding secured for TribunHealth</div></div>
+      </div>
+
+      <div class="tiles">
+        <a class="tile" href="#education">
+          <span class="kicker">01</span>
+          <h2>Education</h2>
+          <p>Columbia Business School · Northeastern University</p>
+        </a>
+        <a class="tile" href="#experience">
+          <span class="kicker">02</span>
+          <h2>Experience</h2>
+          <p>Roku Ramen · Tribun Network · Fidelity · Silvertech</p>
+        </a>
+        <a class="tile" href="#additional">
+          <span class="kicker">03</span>
+          <h2>Additional Info</h2>
+          <p>Skills, project, languages, interests</p>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <!-- EDUCATION -->
+    <section class="block" id="education" aria-labelledby="education-h">
+      <div class="section-head reveal"><span class="idx">01 /</span><h2 id="education-h">Education</h2></div>
+
+      <article class="card reveal">
+        <div class="card-top">
+          <div>
+            <h3>COLUMBIA BUSINESS SCHOOL</h3>
+            <p class="role" style="margin-top:4px;">MBA, May 2027</p>
+          </div>
+          <div class="meta">New York, NY<br><span class="pill">2026 – 2027</span></div>
+        </div>
+        <p class="detail"><span class="label">Honors:</span> Full-tuition merit scholarship recipient</p>
+        <p class="detail"><span class="label">Leadership:</span> VP of Events, Southeast Asian Business Association</p>
+        <p class="detail"><span class="label">Member:</span> Artificial Intelligence Club, Family Business Club, Gourmet Club, Venture Capital Club</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-top">
+          <div>
+            <h3>NORTHEASTERN UNIVERSITY</h3>
+            <p class="role" style="margin-top:4px;">BS, Computer Science and Business Administration</p>
+          </div>
+          <div class="meta">Boston, MA<br><span class="pill">2017 – 2021</span></div>
+        </div>
+        <p class="detail"><span class="label">Leadership:</span> Head of Fundraising, Indonesian Student Organizations of Massachusetts &amp; Northeastern University</p>
+        <p class="detail"><span class="label">Achievement:</span> <strong>Garuda Hacks (2020):</strong> Built MediLoc, a healthcare location optimization tool; selected for OpenWater Accelerator</p>
+      </article>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="block" id="experience" aria-labelledby="experience-h">
+      <div class="section-head reveal"><span class="idx">02 /</span><h2 id="experience-h">Experience</h2></div>
+
+      <div class="timeline">
+        <article class="card current reveal">
+          <div class="card-top">
+            <div>
+              <h3>ROKU RAMEN KEBAYORAN BARU</h3>
+              <p class="org-desc">Japanese ramen restaurant</p>
+            </div>
+            <div class="meta">Jakarta, Indonesia<br><span class="pill">Sept. 2025 – Present</span></div>
+          </div>
+          <p class="role">Owner &amp; Operator</p>
+          <ul>
+            <li>Evaluated and launched a <b>Rp500M (~$30K)</b> franchise acquisition using break-even and payback models; now own the full P&amp;L, vendor sourcing, and a 9-person team, on track to recover the investment in under 18 months</li>
+            <li>Launched and optimized 8 promotions with the store manager across student and office-worker segments, tracking redemptions and average ticket; increased monthly net sales <b>24%</b> and traffic <b>16%</b> in 6 months</li>
+            <li>Analyzed hourly demand, labor utilization, utilities, and food wastage with the store manager; redesigned staffing around customer traffic and reduced break-even sales <b>25%</b>, reaching profitability within 60 days</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div>
+              <h3>TRIBUN NETWORK – Kompas Gramedia Group</h3>
+              <p class="org-desc">Indonesia's largest digital news network</p>
+            </div>
+            <div class="meta">Jakarta, Indonesia<br><span class="pill">Feb. 2025 – Dec. 2025</span></div>
+          </div>
+          <p class="role">Business Development Analyst (Growth Strategy)</p>
+          <ul>
+            <li>Assessed the CEO's proposed utility-payment product through market sizing, competitive analysis, and unit economics; showed the market was structurally zero-margin, reversing the decision and preventing <b>Rp300M (~$18K)</b> of development spend</li>
+            <li>Ran customer discovery through ~500 surveys and 10+ physician interviews, finding tier-2/3 parents relied on WhatsApp groups for parenting advice; shaped the TribunHealth concept with engineering and design, securing <b>Rp1B (~$60K)</b> build funding</li>
+            <li>Benchmarked local and global media platforms to identify Tribun's competitive advantage in its 34-province newsroom network; presented the strategy at the business performance review, where leadership adopted local coverage as a strategic priority</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div>
+              <h3>FIDELITY INVESTMENTS</h3>
+            </div>
+            <div class="meta">Boston, MA<br><span class="pill">July 2022 – Dec. 2024</span></div>
+          </div>
+          <p class="role">Software Engineer</p>
+          <p class="subhead">Platform &amp; API Engineering</p>
+          <ul>
+            <li>Designed a Java/Spring Boot API orchestration layer with the head of architecture and a principal engineer, parallelizing calls across financial-data services and reducing response latency <b>50%</b>, measured in Datadog</li>
+            <li>Automated Wall Street Office (WSO) data into the platform with the WSO team, replacing document-based reports with start- and end-of-day processes in SQL and Kafka, saving financial analysts <b>~1 hour a day</b> of manual cash-flow tracking</li>
+          </ul>
+          <p class="subhead">Team Leadership &amp; Cross-Team Enablement</p>
+          <ul>
+            <li>Led delivery as Scrum Master after 4 members of a 7-person squad rotated off; partnered with the product manager to standardize code review, testing, and deployment, reducing deployment defects <b>60%</b> and improving story burndown <b>30%</b></li>
+            <li>Guided 6 partner teams building on our domain APIs and GraphQL layer as one of the squad's gatekeepers, reviewing 10–18 code changes a week and introducing a shared testing standard that cut rework and increased deployment speed <b>~25%</b></li>
+            <li>Translated portfolio managers' needs into Jira user stories with our product manager, breaking down epics and evaluating technical approaches for APIs serving 100+ users; demoed each sprint and folded feedback into the backlog</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <div>
+              <h3>SILVERTECH, INC.</h3>
+              <p class="org-desc">Web development agency</p>
+            </div>
+            <div class="meta">Manchester, NH<br><span class="pill">Feb. 2022 – July 2022</span></div>
+          </div>
+          <p class="role">Junior Back End Engineer</p>
+          <ul>
+            <li>Built custom back-end features for enterprise healthcare and banking clients, working from requirements gathered by our project managers and coordinating with the agency's designers and front-end developers – delivered <b>100%</b> of engagements on time</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ADDITIONAL INFORMATION -->
+    <section class="block" id="additional" aria-labelledby="additional-h">
+      <div class="section-head reveal"><span class="idx">03 /</span><h2 id="additional-h">Additional Information</h2></div>
+
+      <div class="info-grid">
+        <div class="card reveal">
+          <h3>Skills</h3>
+          <dl class="kv">
+            <dt>Technical</dt>
+            <dd><ul class="tags"><li>Java</li><li>Python</li><li>SQL</li><li>GraphQL</li><li>Kafka</li><li>Spring Boot</li></ul></dd>
+            <dt>Data &amp; Analytics</dt>
+            <dd><ul class="tags"><li>Tableau</li><li>Datadog</li></ul></dd>
+            <dt>Product</dt>
+            <dd><ul class="tags"><li>Customer research</li><li>Market sizing</li></ul></dd>
+            <dt>Agile</dt>
+            <dd><ul class="tags"><li>Jira</li></ul></dd>
+          </dl>
+        </div>
+
+        <div class="card reveal">
+          <h3>Availability</h3>
+          <dl class="kv">
+            <dt>Work authorization</dt>
+            <dd>STEM OPT eligible</dd>
+            <dt>Available</dt>
+            <dd>Full-time from June 2027</dd>
+          </dl>
+          <h3 style="margin-top:22px;">Languages</h3>
+          <dl class="kv">
+            <dt>Indonesian</dt><dd>Native</dd>
+            <dt>English</dt><dd>Fluent</dd>
+          </dl>
+        </div>
+
+        <div class="card reveal">
+          <h3>Project</h3>
+          <p style="margin:0; color:#CFDCE8;">Built an agentic AI job-search tool for daily job ranking, preference learning, and fact-checked resume tailoring</p>
+        </div>
+
+        <div class="card reveal">
+          <h3>Interests</h3>
+          <ul class="tags"><li>Chelsea FC</li><li>Porter Robinson</li><li>Anime (Re:Zero)</li><li>TCG collecting (Pokemon, One Piece)</li></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Daniel Hantoro</span>
+      <span><a href="https://www.linkedin.com/in/daniel-hantoro/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/danielrbimo" target="_blank" rel="noopener">GitHub</a> · <a href="#top">Back to top ↑</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Highlight the nav link for the section in view
+    const links = document.querySelectorAll('.nav a.link');
+    const byId = Object.fromEntries([...links].map(a => [a.getAttribute('href').slice(1), a]));
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && byId[e.target.id]) {
+          links.forEach(l => l.classList.remove('active'));
+          byId[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('section.block').forEach(s => navObserver.observe(s));
+
+    // Fade content in as it scrolls into view
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

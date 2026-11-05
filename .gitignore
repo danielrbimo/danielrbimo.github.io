@@ -1,0 +1,9 @@
+# Never publish (see AGENTS.md)
+private/
+IMG_*.jpeg
+IMG_*.jpg
+IMG_*.HEIC
+cv.pdf
+.env*
+.DS_Store
+AGENTS.md
